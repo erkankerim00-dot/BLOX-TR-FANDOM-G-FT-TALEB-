@@ -1,0 +1,308 @@
+/*===== GOOGLE FONTS =====*/
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
+
+/*===== VARIABLES CSS =====*/
+:root {
+  --header-height: 3rem;
+
+  /*========== Colors ==========*/
+  --first-color: #000458;
+  --first-color-alt: #000458;
+  --title-color: #d0d0d0;
+  --text-color: #d0d0d0;
+  --text-color-light: #d9d2d2;
+  --body-color: #000458;
+  --container-color: #000458;
+  /* Accent colors for buttons */
+  --accent-1: #03afff;
+  --accent-2: #0092fb;
+  --accent-shadow: 0 8px 20px rgba(0, 130, 251, 0.18);
+
+  /*========== Font and typography ==========*/
+  --body-font: 'Black 900', Playfair;
+  --biggest-font-size: 2.25rem;
+  --h1-font-size: 1.5rem;
+  --h2-font-size: 1.25rem;
+  --h3-font-size: 1rem;
+  --normal-font-size: .938rem;
+  --small-font-size: .813rem;
+  --smaller-font-size: .75rem;
+
+  /*========== Font weight ==========*/
+  --font-medium: 500;
+  --font-semi-bold: 600;
+
+  /*========== Margenes ==========*/
+  --mb-1: .5rem;
+  --mb-2: 1rem;
+  --mb-3: 1.5rem;
+  --mb-4: 2rem;
+  --mb-5: 2.5rem;
+  --mb-6: 3rem;
+
+  /*========== z index ==========*/
+  --z-tooltip: 10;
+  --z-fixed: 100;
+}
+
+@media screen and (min-width: 768px){
+  :root{
+    --biggest-font-size: 4rem;
+    --h1-font-size: 2.25rem;
+    --h2-font-size: 1.5rem;
+    --h3-font-size: 1.25rem;
+    --normal-font-size: 1rem;
+    --small-font-size: .875rem;
+    --smaller-font-size: .813rem;
+  }
+}
+
+
+/*========== BASE ==========*/
+*,::before,::after{
+  box-sizing: border-box;
+}
+
+html{
+  scroll-behavior: smooth;
+}
+
+/* If you want an image fallback, set `poster` on the <video> or
+  uncomment a `background-image` here. The background video is enabled. */
+
+/* background image (replaces video) */
+body{
+  margin: var(--header-height) 0 0 0;
+  font-family: var(--body-font);
+  font-size: var(--normal-font-size);
+  color: var(--text-color);
+  line-height: 1.6;
+  background-image: url("img/gorsel.jpeg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+/* Semi-opaque overlay to ensure content readability */
+body::before{
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  /* subtle dark overlay for readability */
+  background: rgba(0,0,0,0.45);
+}
+
+/* Ensure main content sits above video/overlay */
+.site-content{
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  min-height: calc(100vh - var(--header-height));
+  padding: 2rem 1rem;
+  text-align: center;
+}
+
+h1,h2,h3,p,ul{
+  margin: 0;
+}
+ 
+h1{
+    color: var(--title-color);
+    font-size: var(--h1-font-size);
+    font-weight: var(--font-semi-bold);
+    margin-bottom: var(--mb-2); 
+  text-align: center;
+}
+
+ul{
+  padding: 0;
+  list-style: none;
+}
+
+.nav{
+  color: #fff;
+  padding: 1.25rem;
+  min-height: 140px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 8px;
+  align-items: center; /* center inner controls */
+  text-align: center;
+}
+
+/* page container wrapper */
+.bd-container{
+  max-width: 1080px;
+  width: calc(100% - 2rem);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.gift-select{
+  background-color: var(--first-color);
+  color: #fff;
+}
+
+/* Layout: make header navs display side-by-side in a responsive grid */
+header{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2.75rem; /* larger gap so items are more spaced out */
+  align-items: start;
+  padding: 3rem 2rem; /* extra horizontal padding to keep away from sides */
+  width: 100%;
+  box-sizing: border-box;
+  max-width: 1100px;
+  margin: 0 auto; /* center the whole grid and keep it away from the sides */
+}
+
+/* When `.bd-container` is used inside the header, allow items to size naturally */
+header .bd-container{
+  max-width: none;
+  width: auto;
+  margin-left: 0;
+  margin-right: 0;
+  padding: 0;
+}
+
+/* Make inputs and selects fill the block width */
+.nav h3{ width:100%; margin-bottom:.5rem; }
+
+.nav input[type="text"], .nav select{
+  width: 95%;
+  max-width: 640px;
+  padding: .6rem .75rem;
+  margin-top: .5rem;
+  border-radius: 6px;
+  border: none;
+}
+
+/* Small centered button */
+.nav button{
+  width: 80%;
+  max-width: 560px;
+  padding: .9rem 1rem;
+  margin-top: .9rem;
+  margin-left: auto; /* ensure button stays centered inside nav */
+  margin-right: auto;
+  font-size: 1rem;
+  font-weight: 700;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  color: #000000;
+  background: linear-gradient(90deg, var(--accent-1), var(--accent-2));
+  box-shadow: var(--accent-shadow);
+  transition: transform 160ms ease, box-shadow 160ms ease, filter 160ms ease;
+  align-self: center;
+}
+
+/* Button hover / active / focus styles to make it stand out */
+.nav button:hover{
+  transform: translateY(-3px);
+  box-shadow: 0 12px 28px rgba(0, 170, 255, 0.28);
+  filter: brightness(1.02);
+}
+
+.nav button:active{
+  transform: translateY(-1px) scale(.997);
+  box-shadow: 0 8px 18px rgba(0, 153, 255, 0.2);
+}
+
+.nav button:focus{
+  outline: none;
+  box-shadow: 0 0 0 6px rgba(0, 195, 255, 0.12), 0 12px 28px rgba(88, 172, 255, 0.28);
+}
+
+/* status message directly under the button */
+#status{
+  color: #fff;
+  margin-top: .5rem;
+  text-align: center;
+  font-weight: 600;
+  font-size: .95rem;
+  text-shadow: 0 2px 6px rgba(0,0,0,0.6);
+}
+
+/* success / error modifiers for status text */
+.status-success{ color: #b8ffb8; }
+.status-error{ color: #ffb3b3; }
+
+/* Larger layout for wider screens: force 3 columns and 2 rows look */
+@media screen and (min-width: 768px){
+  header{
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: minmax(140px, auto);
+    gap: 3rem;
+    padding: 1.5rem 2rem;
+  }
+
+  /* Make blocks bigger and more comfortable */
+  .nav{
+    padding: 1.5rem;
+    min-height: 140px;
+  }
+
+  .nav input[type="text"], .nav select{
+    padding: .65rem .75rem;
+    font-size: 1rem;
+  }
+
+  /* If there are more than 6 items, keep the last (submit) full-width for balance */
+  header .nav:last-child{
+    grid-column: 1 / -1;
+    align-self: end;
+  }
+}
+
+@media screen and (max-width: 420px){
+  header{
+    grid-template-columns: 1fr;
+    gap: .75rem;
+    padding: .75rem;
+  }
+}
+
+/* make the form a responsive grid so each .nav becomes a grid cell */
+#form{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1.25rem;
+  align-items: start;
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* let .nav elements stretch to fill the grid column when used together */
+.nav.bd-container{
+  max-width: none;
+  width: 100%;
+  margin: 0;
+}
+
+/* make the submit/nav last child span full width for balance */
+#form .nav:last-child{
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: center; /* center contents of the last nav cell */
+  align-items: center; /* vertically center the button inside the cell */
+}
+
+/* make the submit button a centered block and constrain width for a consistent look */
+#form .nav:last-child button,
+.nav button{ /* reinforce centering for all buttons */
+  display: block; /* ensures margin auto works */
+  margin: .9rem auto 0 auto; /* top then centered horizontally */
+}
+
+/* optional: make submit button a little narrower on very large screens */
+#form .nav:last-child button{
+  width: min(560px, 70%);
+}
